@@ -2,7 +2,7 @@
   "leavingWork": {
     "targetNumber": "+447825877505",
     "message": "Just leaving work, be home soon.",
-    "leavingTime": 1900,
+    "leavingTime": 2000,
     "location": {
       "workCoords": {
         "latitude": 52.6302,
@@ -13,5 +13,11 @@
         "longitude": -1.1306
       }
     }
+  },
+  "binCollection": {
+    "targetEmail": "martyn.e.rushton@gmail.com",
+    "message": "The bins need to go out tonight!",
+    "day": "Sat",
+    "time": "20:15"
   }
 }

@@ -1,5 +1,11 @@
-const binCollection = require('./applets/bin-collection.js')
-const leavingWork = require('./applets/leaving-work.js')
+const BinCollection = require('./applets/bin-collection.js')
+const LeavingWork = require('./applets/leaving-work.js')
 
-binCollection()
-leavingWork()
+const binCollection = new BinCollection()
+const leavingWork = new LeavingWork()
+
+
+setInterval(() => {
+  binCollection.run()
+  leavingWork.run()
+}, 1000)

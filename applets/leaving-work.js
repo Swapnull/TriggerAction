@@ -3,25 +3,43 @@ const moment = require('moment')
 const GeoPoint = require('geopoint');
 const data = require('../data/applets.json').leavingWork
 
-const location = data.location
-const centerCoord = new GeoPoint(location.workCoords.latitude, location.workCoords.longitude);
-const currentCoord = getCurrentLocation()
-const distance = centerCoord.distanceTo(currentCoord, true)
 
-/* Get the current location of the users device*/
-function getCurrentLocation () {
-  /* Would use something like navigator.geolocation.getCurrentPosition in production */ 
-  return new GeoPoint(location.currentCoords.latitude, location.currentCoords.longitude)
-}
-
-/* Are we within an hour of the estimated leaving time? */
-function withinLeavingTime () {
-  const current = moment(new Date()).format('HHmm')
-  return data.leavingTime -100 < current && current < data.leavingTime + 100
-}
-
-module.exports = () => {
-  if (distance > 0.5) {
-      message(data.targetNumber, data.message)
+class LeavingWork {
+  
+  constructor () {
+    this.messageSent = true
   }
+  
+  /* Get the current location of the users device*/
+  getCurrentLocation () {
+    /* Would use something like navigator.geolocation.getCurrentPosition in production */ 
+    return new GeoPoint(data.location.currentCoords.latitude, data.location.currentCoords.longitude)
+  }
+  
+  /* Are we within an hour of the estimated leaving time? */
+  withinLeavingTime () {
+    const current = moment(new Date()).format('HHmm')
+    return data.leavingTime -100 < current && current < data.leavingTime + 100
+  }
+  
+  run () {
+    const workLocation = new GeoPoint(data.location.workCoords.latitude, data.location.workCoords.longitude);
+    const currentLocation = this.getCurrentLocation()
+    const distance = currentLocation.distanceTo(workLocation, true)  
+        
+    if (this.getCurrentLocation() == this.workLocation) {
+      // currently at work
+      this.messageSent = false
+    } else if (this.getCurrentLocation() != this.workLocation && !this.messageSent) {
+      // currently not at work, but message hasnt been sent
+      if (this.withinLeavingTime()) { // ensures message is only sent at end of day
+        message(data.targetNumber, data.message)
+        this.messageSent = true
+      }
+      
+    }
+  }
+
 }
+
+module.exports = LeavingWork
