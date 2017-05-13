@@ -1,0 +1,17 @@
+{
+  "leavingWork": {
+    "targetNumber": "+447825877505",
+    "message": "Just leaving work, be home soon.",
+    "leavingTime": 1900,
+    "location": {
+      "workCoords": {
+        "latitude": 52.6302,
+        "longitude": -1.1306
+      },
+      "currentCoords": {
+        "latitude": 53.6302,
+        "longitude": -1.1306
+      }
+    }
+  }
+}
