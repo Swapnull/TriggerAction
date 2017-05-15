@@ -1,5 +1,3 @@
-# Programming Test
-
 ## Task
 Create a Trigger and Action based application which allows the building of Applets to perform an Action based on the state of a Trigger.
 
